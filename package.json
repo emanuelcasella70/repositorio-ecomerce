@@ -1,0 +1,31 @@
+{
+  "name": "ecomerce",
+  "version": "1.0.0",
+  "description": "tienda online",
+  "main": "index.html",
+  "type": "module",
+  "scripts": {
+    "test": "start ",
+    "start": "nodemon ./src/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/emanuelcasella70/Portafolio..git"
+  },
+  "author": "emanueal casella",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/emanuelcasella70/Portafolio./issues"
+  },
+  "homepage": "https://github.com/emanuelcasella70/Portafolio.#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "mercadopago": "^2.0.15",
+    "morgan": "^1.10.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.4"
+  }
+}
