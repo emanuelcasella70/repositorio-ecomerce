@@ -10,20 +10,29 @@ const contadorPoducts = document.querySelector(".contadorproducts");
 const totalApagar = document.querySelector("#total");
 
 
-if(contadorPoducts.textContent == 0 ){
-   contadorPoducts.classList.add("mm")  
-}
+
+
+// if(contadorPoducts.textContent == 0 ){
+//    contadorPoducts.classList.add("mm")  
+// }
+
 
 
 
 let allProducts = []
 
+console.log(contadorPoducts)
+
 productsBody.addEventListener("click", e =>{
-  if(contadorPoducts.textContent >= 0 ){
+   if(contadorPoducts.textContent >= 0){
     contadorPoducts.classList.remove("mm")  
+}else{
+  contadorPoducts.classList.add("mm")
 }
+
+
   if(e.target.classList.contains("slider__link")){
-     const product = e.target.parentElement  
+    const product = e.target.parentElement  
 
      const infoProducts = {
        cantidad : 1,
@@ -31,9 +40,10 @@ productsBody.addEventListener("click", e =>{
        titulo : product.querySelector("h2").textContent,
        precio : product.querySelector("p").textContent
      }
+     
 
      const exits = allProducts.some(product => product.titulo === infoProducts.titulo)
-
+     
      if(exits){
         const products = allProducts.map(product =>{
           if(product.titulo === infoProducts.titulo){
@@ -49,25 +59,31 @@ productsBody.addEventListener("click", e =>{
      }
      showProducts();
      console.log(allProducts)
+
     }
+
 })
 
 contenedorProducts.addEventListener("click", e =>{{
   if(e.target.classList.contains("cio")){
     const product = e.target.parentElement.parentElement
     const title = product.querySelector("p").textContent;
-
+    
     console.log(title);
-
+    
     allProducts = allProducts.filter( e => 
       e.titulo !== title);
-  }
-  showProducts()  
-  if(contadorPoducts.textContent === "0" ){
-    contadorPoducts.classList.add("mm")  
- }
-   
+    }
 
+    showProducts()  
+
+    if(contadorPoducts.textContent >= 0){
+      contadorPoducts.classList.add("mm")
+    }
+
+    
+
+  
 }})
 
 /// FUNCTION PARA MOSTRAR HTML 
@@ -77,6 +93,9 @@ const small = document.querySelector("#tull")
 
 const showProducts = () =>{
   /// limpiar carrito 
+  
+
+
   buy.classList.remove("mm")
   contenedorProducts.innerHTML = "";
   
@@ -107,22 +126,23 @@ allProducts.forEach(product =>{
 <div id="wallet_container"></div> 
 
     `
-// console.log(allProducts)
-
+    
     contenedorProducts.append(conteinerProducts)
     
     totalofproducts = totalofproducts + parseInt(product.cantidad * product.precio.slice(1));
     
     total = total + product.cantidad;
     
+    console.log(totalofproducts)
+
+    
   })
+
+
+
 
 contadorPoducts.textContent = `${total}`
 totalApagar.textContent = `$${totalofproducts}`
-
-
-const mp = new MercadoPago('YOUR_PUBLIC_KEY',{ locale: "es-AR"});
-
 
 
 const orderData = {
@@ -131,6 +151,8 @@ const orderData = {
   unit_price: totalofproducts,
   
 }
+
+
 
 botonpagar.addEventListener("click", async ()=>{
    const response = await fetch("/create-order",{
@@ -152,6 +174,10 @@ botonpagar.addEventListener("click", async ()=>{
 
 
 };
+
+console.log(allProducts)
+
+
 
 // MERCADO PAGO
 
