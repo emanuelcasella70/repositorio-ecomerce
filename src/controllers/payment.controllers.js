@@ -1,20 +1,23 @@
 import { MercadoPagoConfig, Preference } from 'mercadopago';
 
 
+const client = new MercadoPagoConfig({ accessToken: 'TEST-1720113323805281-071117-1267e2cae88422376efe7c4e3a61c6ee-396947688' });    
+
+ 
 
 export const paymentcontrollers = async (req, res) => {
-    
-    const client = new MercadoPagoConfig({ accessToken: 'APP_USR-4928203189775956-071122-f1c38d3beda0fc37f7f6b7e8e1397de7-1895818481' });    
-    
-    const preference = new Preference(client);
+  const preference = new Preference(client);
+
+  console.log(req.body.titulo)
 
 const result = await preference.create({
   body: {
     items: [
       {
-        title: 'aaa',
+        title: req.body.titulo,
         quantity: 1,
         unit_price: 10,
+        currency_id: "ARS",
       },
     ],
        back_urls: {
@@ -29,6 +32,7 @@ const result = await preference.create({
     
 console.log(result)
 res.send(result)
+
 }
 
 

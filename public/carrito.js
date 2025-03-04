@@ -9,6 +9,9 @@ const contadorPoducts = document.querySelector(".contadorproducts");
 
 const totalApagar = document.querySelector("#total");
 
+const botonpagar = document.getElementById("pay")
+
+
 
 
 
@@ -58,7 +61,6 @@ productsBody.addEventListener("click", e =>{
        allProducts = [...allProducts, infoProducts]
      }
      showProducts();
-     console.log(allProducts)
 
     }
 
@@ -91,11 +93,11 @@ contenedorProducts.addEventListener("click", e =>{{
 const buy = document.querySelector("#toll")
 const small = document.querySelector("#tull")
 
-const showProducts = () =>{
+const mp = new MercadoPago('TEST-9f5e44e9-b985-4da6-9ae2-cda5bd44fff8');
+
+const showProducts = ( ) =>{
   /// limpiar carrito 
-  
-
-
+ 
   buy.classList.remove("mm")
   contenedorProducts.innerHTML = "";
   
@@ -106,7 +108,7 @@ const showProducts = () =>{
 
 let total = 0;
 let totalofproducts = 0;
-const botonpagar = document.getElementById("pay")
+let orderdata = {}
 
 ///
 allProducts.forEach(product =>{
@@ -116,66 +118,86 @@ allProducts.forEach(product =>{
     conteinerProducts.innerHTML = `
 <div class="conteiner-img-product-card"><img src="./fots/reloj-venta.jpg"alt=""></div>
 <div class="container--text--price--">
-<p class="parrafo">${product.titulo}</p>
+<p class="parrafo" id="titulin">${product.titulo}</p>
 <div>
-<p>${product.precio}</p>
+<p id ="precios">${product.precio}</p>
 <p>Cantidad : ${product.cantidad}</p>
 </div>
 </div>
 <div><i class="fas fa-times-circle cio"id="delate"></i></div>
-<div id="wallet_container"></div> 
-
-    `
+<div id="wallet_container"></div> `
     
     contenedorProducts.append(conteinerProducts)
     
     totalofproducts = totalofproducts + parseInt(product.cantidad * product.precio.slice(1));
     
     total = total + product.cantidad;
-    
-    console.log(totalofproducts)
 
+
+
+    orderdata = {
+      titulo : document.getElementById("titulin").textContent,
+      precios : document.getElementById("precios").textContent ,
+    }
+})
+  contadorPoducts.textContent = `${total}`
+  totalApagar.textContent = `$${totalofproducts}`
+
+  console.log(orderdata.precios)
+
+  
+  
+
+  botonpagar.addEventListener("click", async ()=>{
+    const response = await fetch("/create-order",{
+      method: "POST",
+      headers:{
+        "Content-Type":"application/json",
+      },
+      body : JSON.stringify(orderdata)
+    });
+    const data = await response.json()
+    // window.location.href = data.init_point;
+
+    mp.bricks().create("wallet", "wallet_container", {
+      initialization: {
+          preferenceId: data,
+      },
+   customization: {
+    texts: {
+     valueProp: 'smart_option',
+    },
+    },
+   });
+
+    
+    
+    
+    // data.items.unit_price = 4
     
   })
 
-
-
-
-contadorPoducts.textContent = `${total}`
-totalApagar.textContent = `$${totalofproducts}`
-
-
-const orderData = {
-  title: product.titulo,
-  quantity: product.precio,
-  unit_price: totalofproducts,
-  
-}
-
-
-
-botonpagar.addEventListener("click", async ()=>{
-   const response = await fetch("/create-order",{
-      method: "POST",
-      headers:{
-         "Content-Type":"application/json",
-      },
-      body : JSON.stringify(orderData)
-    })
-    const data = await response.json()
-    console.log(data.init_point)
-    
-
-    // window.location.href = data.init_point;
-
-    // data.items.unit_price = 4
-
-})
-
-
 };
 
+
+// const orderData = {
+//   title: product.titulo,
+//   quantity: product.precio,
+//   unit_price: totalofproducts,
+  
+// }
+
+
 console.log(allProducts)
+
+
+
+
+
+
+
+
+
 
 
 
