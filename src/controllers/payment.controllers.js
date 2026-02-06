@@ -8,7 +8,7 @@ const client = new MercadoPagoConfig({ accessToken: 'TEST-1720113323805281-07111
 export const paymentcontrollers = async (req, res) => {
   const preference = new Preference(client);
 
-  console.log(req.body.titulo)
+  console.log(req.body)
 
 const result = await preference.create({
   body: {

@@ -3,7 +3,8 @@ const estructuraProducts = document.querySelector(".dvAlert");
 
 ///PORDUCTOS DEL BODY 
 
-const productsBody = document.querySelector(".container-tips");
+// const productsBody = document.querySelector(".container-tips");
+const productsBody = document.querySelector("main");
 
 const contadorPoducts = document.querySelector(".contadorproducts");
 
@@ -93,7 +94,7 @@ contenedorProducts.addEventListener("click", e =>{{
 const buy = document.querySelector("#toll")
 const small = document.querySelector("#tull")
 
-const mp = new MercadoPago('TEST-9f5e44e9-b985-4da6-9ae2-cda5bd44fff8');
+// const mp = new MercadoPago('TEST-9f5e44e9-b985-4da6-9ae2-cda5bd44fff8');
 
 const showProducts = ( ) =>{
   /// limpiar carrito 
@@ -156,24 +157,10 @@ allProducts.forEach(product =>{
       },
       body : JSON.stringify(orderdata)
     });
+
     const data = await response.json()
-    // window.location.href = data.init_point;
+    window.location.href = data.init_point;
 
-    mp.bricks().create("wallet", "wallet_container", {
-      initialization: {
-          preferenceId: data,
-      },
-   customization: {
-    texts: {
-     valueProp: 'smart_option',
-    },
-    },
-   });
-
-    
-    
-    
-    // data.items.unit_price = 4
     
   })
 
